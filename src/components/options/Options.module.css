@@ -1,0 +1,11 @@
+.list {
+    display: flex;
+    gap: 15px;
+}
+
+.item {
+    border-color: #800080;
+    border-width: 3px;
+    color: #800080;
+    background-color: #E6E6FA;
+}

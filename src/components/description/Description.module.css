@@ -1,0 +1,15 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    margin: 0;
+    color: #800080;
+}
+
+.text {
+    color: #BA55D3;
+}
