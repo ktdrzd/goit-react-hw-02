@@ -18,27 +18,15 @@ const getValues = () => {
   };
 };
 
-const getClicks = () => {
-  const savedClicks = window.localStorage.getItem('saved-clicks');
-  if (savedClicks !== null) {
-    return JSON.parse(savedClicks);
-  }
-
-  return 0;
-};
-
 function App() {
-  const [values, setValues] = useState(getValues);
-
-  const [clicks, setClicks] = useState(getClicks);
+  const [values, setValues] = useState(getValues());
+  const totalFeedbacks = values.good + values.neutral + values.bad;
 
   const leaveFeedbacks = option => {
     setValues({
       ...values,
       [option]: values[option] + 1,
     });
-
-    setClicks(clicks + 1);
   };
 
   const resetFeedbacks = () => {
@@ -48,32 +36,28 @@ function App() {
       neutral: 0,
       bad: 0,
     });
-
-    setClicks(0);
   };
 
   useEffect(() => {
     window.localStorage.setItem('saved-values', JSON.stringify(values));
-    window.localStorage.setItem('saved-clicks', clicks);
-  }, [values, clicks]);
+  }, [values]);
 
-  const hiddenFeedbacks = clicks === 0;
-
-  const totalFeedbacks = values.good + values.neutral + values.bad;
-
-  const positiveFeedbacks = Math.round(((values.good + values.neutral) / totalFeedbacks) * 100);
+  const hiddenFeedbacks = totalFeedbacks === 0;
 
   return (
     <div className={style.container}>
       <Description />
-      <Options onUpdate={leaveFeedbacks} hiddenFeedbacks={hiddenFeedbacks} resetFeedbacks={resetFeedbacks} />
+      <Options
+        onUpdate={leaveFeedbacks}
+        hiddenFeedbacks={hiddenFeedbacks}
+        resetFeedbacks={resetFeedbacks}
+      />
       {hiddenFeedbacks ? (
         <Notification />
       ) : (
         <Feedback
           values={values}
           totalFeedbacks={totalFeedbacks}
-          positiveFeedbacks={positiveFeedbacks}
         />
       )}
     </div>

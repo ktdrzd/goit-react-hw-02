@@ -1,6 +1,8 @@
 import style from './Feedback.module.css';
 
-export const Feedback = ({ values: { good, neutral, bad }, totalFeedbacks, positiveFeedbacks }) => {
+export const Feedback = ({ values: { good, neutral, bad }, totalFeedbacks }) => {
+  const positiveFeedbacks = Math.round(((good + neutral) / totalFeedbacks) * 100);
+
   return (
     <div className={style.list}>
       <p className={style.item}>Good: {good}</p>
